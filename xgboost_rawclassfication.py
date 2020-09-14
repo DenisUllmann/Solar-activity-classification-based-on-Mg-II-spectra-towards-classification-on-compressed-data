@@ -12,10 +12,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from tools import plot_confusion_matrix
 
-npzfile_path = "C:/Users/Denis/Documents/IRIS/iris_level_2C"
-csv_path = "D:/Maks_IRIS_class_comp"
+# the path to the iris level 2C npz data files
+npzfile_path = "./iris_level_2C"
+# the path to save processed data
+csv_path = "./csv"
+# the crossvalidation takes some time
 crossvalidate = False
 
+#uploads the data
 columns = ['label','dataarray']
 df = pd.DataFrame(columns=columns)
 filenames = glob(os.path.join(npzfile_path,'*.npz'))
@@ -47,7 +51,7 @@ print(df3[1000:1005])
 print(df2['dataarray'].shape[1])
 print(df3['dataarray'].shape[1])
 '''
-
+# splits data in train and test
 X_train, X_test, Y_train, Y_test = train_test_split(df2['dataarray'], df2['label'], test_size=0.2)
 '''
 
@@ -70,6 +74,7 @@ for md in range(18,50):
 print('Best acc is:', bestaccuracy, 'with md and ne:', bestmd_n_ne)
 
 '''
+# xgboost model
 model = xgb.XGBClassifier(gamma=1,
                           learning_rate=0.01,
                           max_depth=19,
@@ -85,6 +90,7 @@ else:
     print('saving model..')
     pickle.dump(model, open('saved_xgb_lr0-01_md19_ne185.dat', 'wb'))
 
+#performing predictions
 Y_pred = model.predict(np.array(list(X_test)).reshape((len(X_test), -1)))
 #print(Y_pred)
 accuracy = accuracy_score(Y_test, Y_pred)
