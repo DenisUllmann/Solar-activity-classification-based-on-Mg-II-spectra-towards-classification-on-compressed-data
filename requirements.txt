@@ -1,0 +1,9 @@
+pip install irisreader
+pip install xgboost
+pip install sklearn
+pip install pandas
+pip install tqdm
+pip install pickle
+pip install matplotlib
+pip install numpy
+pip install pathlib
